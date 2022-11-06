@@ -10,12 +10,17 @@ const clearButton = document.getElementById("clearButton")
 let displayValueArray = [ ]
 let num1 = 0
 let num2 = 0
+let additonalNumber = 0
 
 buttons.forEach(button => 
     
     button.addEventListener("click", populateDisplay));
 
 function populateDisplay(e) {
+    if (additonalNumber !== 0 && displayValueArray.length === 0) {
+        num1 = additonalNumber;
+        numberOutput.innerHTML = " "
+    }
     if (isNaN(this.innerText) == true) {
         return storeForOperate(e);
     }
@@ -30,44 +35,90 @@ function populateDisplay(e) {
 function storeForOperate(button){
     const buttonOperator = button.target.innerText;
     if (operatorDisplay.innerText !== '') {
+        additonalNumber = 0;
         num2 = displayValueArray.join("")
+        console.log(num2);
+        let total = 0;
 
-        switch (buttonOperator) {
+        switch (buttonOperator) {    
             case "=":
                 if (operatorDisplay.innerHTML.includes("+")) {
+                    total2 = operate(operatorAdd, num1, num2);
                     operatorDisplay.innerText = `${num1} + ${num2} = `
-                    return numberOutput.innerText = operate(operatorAdd, num1, num2)    
+                    displayValueArray = [ ];
+                    num1 = 0;
+                    num2 = 0;
+                    additonalNumber = total2;
+                    return numberOutput.innerText = total2;   
                 } else if (operatorDisplay.innerHTML.includes("-")) {
+                    total2 = operate(operatorSubtract, num1, num2);
                     operatorDisplay.innerText = `${num1} - ${num2} = `
-                    return numberOutput.innerText = operate(operatorSubtract, num1, num2)
+                    num1 = 0;
+                    num2 = 0;
+                    displayValueArray = [ ];
+                    additonalNumber = total2;
+                    return numberOutput.innerText = total2;
                 } else if (operatorDisplay.innerHTML.includes("x")) {
+                    total2 = operate(operatorMultiply, num1, num2);
                     operatorDisplay.innerText = `${num1} x ${num2} = `
-                    return numberOutput.innerText = operate(operatorMultiply, num1, num2)
+                    num1 = 0;
+                    num2 = 0;
+                    displayValueArray = [ ];
+                    additonalNumber = total2;
+                    return numberOutput.innerText = total2;
                 } else if (operatorDisplay.innerHTML.includes("/")) {
+                    total2 = operate(operatorDivide, num1, num2);
                     operatorDisplay.innerText = `${num1} / ${num2} = `
-                    return numberOutput.innerText = operate(operatorDivide, num1, num2)
+                    num1 = 0;
+                    num2 = 0;
+                    additonalNumber = total2;
+                    displayValueArray = [ ];
+                    return numberOutput.innerText = total2;
                 } else {
-                    return;
+                    break;
                 }
                 
-                
+
                 
                 
             case '+':
-            return numberOutput.innerText = operate(operatorAdd, num1, num2)
+            total = operate(operatorAdd, num1, num2);
+            operatorDisplay.innerText = total + buttonOperator;
+            additonalNumber = total;
+            displayValueArray = [ ];
+            num1 = 0;
+            num2 = 0;
+            return numberOutput.innerText = total;
             
             case "-":
-            return numberOutput.innerText = operate(operatorSubtract, num1, num2)   
+            total = operate(operatorSubtract, num1, num2);
+            operatorDisplay.innerText = total + buttonOperator;
+            additonalNumber = total;
+            displayValueArray = [ ];
+            num1 = 0;
+            num2 = 0;
+            return numberOutput.innerText = total;
             
             case "/":
-            return numberOutput.innerText = operate(operatorDivide, num1, num2)
+            total = operate(operatorDivide, num1, num2);
+            operatorDisplay.innerText = total + buttonOperator;
+            additonalNumber = total;
+            displayValueArray = [ ];
+            num1 = 0;
+            num2 = 0;
+            return numberOutput.innerText = total;
     
             case "x":
-            return numberOutput.innerText = operate(operatorMultiply, num1, num2)
-    
+            total = operate(operatorMultiply, num1, num2);
+            operatorDisplay.innerText = total + buttonOperator;
+            additonalNumber = total;
+            displayValueArray = [ ];
+            num1 = 0;
+            num2 = 0;
+            return numberOutput.innerText = total;
             default: break;
         }
-    }
+    } else
 
         num1 = displayValueArray.join("");
         switch (buttonOperator) {
